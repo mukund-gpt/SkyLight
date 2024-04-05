@@ -6,4 +6,6 @@
     </style>
 
     <style name="Theme.Skylight" parent="Base.Theme.Skylight" />
+
+    <color name="grid_text_color">#000000</color>
 </resources>

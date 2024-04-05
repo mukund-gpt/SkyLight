@@ -2,5 +2,8 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/archivo_black</item>
+        <item>@font/creepster</item>
+        <item>@font/fraunces_medium</item>
+        <item>@font/roboto_bold</item>
     </array>
 </resources>
