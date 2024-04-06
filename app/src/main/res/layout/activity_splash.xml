@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:fontFamily="@font/archivo_black"
-        android:text="Weather MAtters \n We have Got The Deatils"
+        android:text="@string/splash_desc"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"

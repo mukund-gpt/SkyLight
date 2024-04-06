@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Skylight</string>
+    <string name="splash_desc">\"A change in the weather is sufficient to recreate the world and ourselves.\" - Marcel Proust</string>
 </resources>
