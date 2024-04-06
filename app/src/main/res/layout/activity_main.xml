@@ -137,7 +137,7 @@
     <androidx.gridlayout.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="270dp"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/frame_spape"
         android:padding="10dp"
@@ -149,7 +149,6 @@
 
 
         <LinearLayout
-            android:id="@+id/humidity"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="5dp"
@@ -166,6 +165,7 @@
                 app:srcCompat="@drawable/humidity" />
 
             <TextView
+                android:id="@+id/humidity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fraunces_medium"
@@ -202,6 +202,7 @@
                 app:srcCompat="@drawable/sunrise" />
 
             <TextView
+                android:id="@+id/sunrise"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fraunces_medium"
@@ -211,7 +212,6 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/sunrise"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fraunces_medium"
@@ -239,6 +239,7 @@
                 app:srcCompat="@drawable/sunset" />
 
             <TextView
+                android:id="@+id/sunset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fraunces_medium"
@@ -275,6 +276,7 @@
                 app:srcCompat="@drawable/wind" />
 
             <TextView
+                android:id="@+id/wind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fraunces_medium"
@@ -284,7 +286,6 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/wind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fraunces_medium"
@@ -307,12 +308,12 @@
             app:layout_rowWeight="1">
 
             <ImageView
-                android:id="@+id/condition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/conditions" />
 
             <TextView
+                android:id="@+id/condition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fraunces_medium"
@@ -344,12 +345,12 @@
             app:layout_rowWeight="1">
 
             <ImageView
-                android:id="@+id/sea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/sea" />
 
             <TextView
+                android:id="@+id/sea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
