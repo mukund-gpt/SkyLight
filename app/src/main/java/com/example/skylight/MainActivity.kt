@@ -32,21 +32,27 @@ class MainActivity : AppCompatActivity() {
             .baseUrl("https://api.openweathermap.org/data/2.5/")
             .build().create(ApiInterface::class.java)
         val response=retrofit.getWeatherData("jaipur","3a92cecdb8ba1596c279d469f5ec4045","metric")
+
+        //check api url
+        val baseUrl = "https://api.openweathermap.org/data/2.5/"
+        val city = "jaipur"
+        val apiKey = "3a92cecdb8ba1596c279d469f5ec4045"
+        val units = "metric"
+        val apiUrl = "${baseUrl}weather?q=$city&appid=$apiKey&units=$units"
+        //Log.d("TAG", "fetchWeatherData: $apiUrl")
+        //
+
         response.enqueue(object  : Callback<weatherApp>{
             override fun onResponse(call: Call<weatherApp>, response: Response<weatherApp>) {
                 val responseBody=response.body()
-                if(response.isSuccessful ){
-                    val temperature= responseBody?.main?.temp.toString()
-//                    binding.temp.text= "$temperature"
-                    Log.d("TAG", "onResponse: $temperature")
-                    Toast.makeText(applicationContext, "from if", Toast.LENGTH_SHORT).show()
+                //Log.d("TAG", "onResponse: $responseBody")
+                if(response.isSuccessful && responseBody!=null ){
+                    val temperature= responseBody.main.temp.toString()
+                    binding.temp.text="$temperature°ᶜ"
                 }
                 else{
-                    val errorCode=response.code()
-                    Log.d("TAG", "onResponse: helloworld")
-                    Log.d("TAG", "onResponse: Error code: $errorCode")
-                    Toast.makeText(applicationContext, "from else", Toast.LENGTH_SHORT).show()
-                }
+                    //val errorCode=response.code()
+                   }
             }
 
             override fun onFailure(call: Call<weatherApp>, t: Throwable) {
