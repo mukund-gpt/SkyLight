@@ -54,7 +54,7 @@
         android:id="@+id/temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="50dp"
+        android:layout_marginRight="60dp"
         android:fontFamily="@font/roboto_bold"
         android:padding="2dp"
         android:text="00.00°ᶜ"
