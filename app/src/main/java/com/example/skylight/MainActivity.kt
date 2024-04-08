@@ -26,24 +26,141 @@ import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.location.LocationManager
+import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
+import java.lang.Exception
+
+
 //3a92cecdb8ba1596c279d469f5ec4045
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
     @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("Missing Permission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val city="allahabad"
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) {
+
+                permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false)
+                        || permissions.getOrDefault(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    false
+                )
+                -> {
+                    Toast.makeText(this, "Location Access Granted", Toast.LENGTH_SHORT).show()
+
+                    if (isLocationEnabled()){
+
+                        val result = fusedLocationClient.getCurrentLocation(
+                            Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+                            CancellationTokenSource().token
+                        )
+                        result.addOnCompleteListener {
+                            val location =
+                                "Latitude: " + it.result.latitude + "\n" + "Longitude: " + it.result.longitude
+
+                            Toast.makeText(this, f"{location}", Toast.LENGTH_SHORT)
+                        }
+                    } else {
+
+                        Toast.makeText(this, "Please turn ON the location.", Toast.LENGTH_SHORT).show()
+                        createLocationRequest()
+                            }
+
+                } else -> {
+
+                    Toast.makeText(this, "No Location Access", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        binding.search.setOnClickListener {
+
+            locationPermissionRequest.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
+
+        val city = "allahabad"
         fetchWeatherData(city)
         searchCity()
 
     }
 
+    private fun isLocationEnabled(): Boolean {
+
+        val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+
+        try {
+
+            return locationManager.isLocationEnabled(LocationManager.GPS_PROVIDER)
+        }catch (e: Exception) {
+
+            e.printStackTrace()
+        }
+
+        return false
+    }
+
+    private fun createLocationRequest() {
+
+        val locationRequest = LocationManager.Builder(
+            Priority.PRIORITY_HIGH_ACCURACY,
+            10000
+        ).setMinUpdateIntervalMillis(5000).build()
+
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+
+        val client = LocationServices.getSettingsClient(this)
+        val task = client.checkLocationSettings(builder.build())
+
+        task.addOnSuccessListener {
+
+        }
+
+        task.addOnFailureListener { e ->
+            if (e is ResolvableApiException) {
+
+                try {
+
+                    e.startResolutionForResult(
+                        this, 100
+                    )
+                } catch (sendEx: java.lang.Exception) {
+
+
+                }
+            }
+        }
+    }
+
     private fun searchCity() {
-        val searchview=binding.search
-        searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        val searchview = binding.search
+        searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
                     fetchWeatherData(query)
@@ -60,12 +177,13 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun fetchWeatherData(cityName:String) {
-        val retrofit=Retrofit.Builder()
+    private fun fetchWeatherData(cityName: String) {
+        val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("https://api.openweathermap.org/data/2.5/")
             .build().create(ApiInterface::class.java)
-        val response=retrofit.getWeatherData(cityName,"3a92cecdb8ba1596c279d469f5ec4045","metric")
+        val response =
+            retrofit.getWeatherData(cityName, "3a92cecdb8ba1596c279d469f5ec4045", "metric")
 
         //check api url
         val baseUrl = "https://api.openweathermap.org/data/2.5/"
@@ -76,31 +194,37 @@ class MainActivity : AppCompatActivity() {
         //Log.d("TAG", "fetchWeatherData: $apiUrl")
 
 
-        response.enqueue(object  : Callback<weatherApp>{
+        response.enqueue(object : Callback<weatherApp> {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call<weatherApp>, response: Response<weatherApp>) {
-                val responseBody=response.body()
+                val responseBody = response.body()
                 //Log.d("TAG", "onResponse: $responseBody")
-                if(response.isSuccessful && responseBody!=null ){
-                    val temperature= responseBody.main.temp.toString()
-                    val weather=responseBody.weather.firstOrNull()?.main?:"Unknown"
-                    val minTemp=responseBody.main.temp_min
-                    val maxTemp=responseBody.main.temp_max
+                if (response.isSuccessful && responseBody != null) {
+                    val temperature = responseBody.main.temp.toString()
+                    val weather = responseBody.weather.firstOrNull()?.main ?: "Unknown"
+                    val minTemp = responseBody.main.temp_min
+                    val maxTemp = responseBody.main.temp_max
 
-                    val timezone=responseBody.timezone
+                    val timezone = responseBody.timezone
 
-                    val humidity=responseBody.main.humidity
-                    val sunrise=responseBody.sys.sunrise
-                    val sunset=responseBody.sys.sunset
-                    val wind=responseBody.wind.speed
-                    val sealevel=responseBody.main.pressure
+                    val humidity = responseBody.main.humidity
+                    val sunrise = responseBody.sys.sunrise
+                    val sunset = responseBody.sys.sunset
+                    val wind = responseBody.wind.speed
+                    val sealevel = responseBody.main.pressure
 
                     // Convert sunrise timestamp
-                    val sunriseDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(sunrise.toLong()), ZoneId.systemDefault())
+                    val sunriseDateTime = LocalDateTime.ofInstant(
+                        Instant.ofEpochSecond(sunrise.toLong()),
+                        ZoneId.systemDefault()
+                    )
                     val sunriseTime = sunriseDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
 
                     // Convert sunset timestamp
-                    val sunsetDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(sunset.toLong()), ZoneId.systemDefault())
+                    val sunsetDateTime = LocalDateTime.ofInstant(
+                        Instant.ofEpochSecond(sunset.toLong()),
+                        ZoneId.systemDefault()
+                    )
                     val sunsetTime = sunsetDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
 
                     // Get the current date and time in the specified timezone
@@ -115,25 +239,24 @@ class MainActivity : AppCompatActivity() {
                     val day = currentTime.dayOfWeek.getDisplayName(dayOfWeekFormatter, locale)
 
 
-                    binding.city.text="$cityName"
-                    binding.temp.text="$temperature°ᶜ"
-                    binding.weather.text=weather
-                    binding.minTemp.text="Min temp: $minTemp°ᶜ"
-                    binding.maxTemp.text="Max temp: $maxTemp°ᶜ"
-                    binding.day.text="$day"
-                    binding.date.text="$date"
-                    binding.humidity.text="$humidity%"
-                    binding.sunrise.text="$sunriseTime"
-                    binding.sunset.text="$sunsetTime"
-                    binding.wind.text="$wind"+"m/s"
-                    binding.condition.text="$weather"
-                    binding.sea.text="$sealevel" + "hPa"
+                    binding.city.text = "$cityName"
+                    binding.temp.text = "$temperature°ᶜ"
+                    binding.weather.text = weather
+                    binding.minTemp.text = "Min temp: $minTemp°ᶜ"
+                    binding.maxTemp.text = "Max temp: $maxTemp°ᶜ"
+                    binding.day.text = "$day"
+                    binding.date.text = "$date"
+                    binding.humidity.text = "$humidity%"
+                    binding.sunrise.text = "$sunriseTime"
+                    binding.sunset.text = "$sunsetTime"
+                    binding.wind.text = "$wind" + "m/s"
+                    binding.condition.text = "$weather"
+                    binding.sea.text = "$sealevel" + "hPa"
                     changeImageAcctoWeather(weather)
-                }
-                else{
+                } else {
                     //val errorCode=response.code()
                     Toast.makeText(applicationContext, "Not Available", Toast.LENGTH_SHORT).show()
-                   }
+                }
             }
 
             override fun onFailure(call: Call<weatherApp>, t: Throwable) {
@@ -145,26 +268,30 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun changeImageAcctoWeather(condition:String) {
+    private fun changeImageAcctoWeather(condition: String) {
 
-        when(condition){
-            "Clear Sky","Sunny","Clear"->{
+        when (condition) {
+            "Clear Sky", "Sunny", "Clear" -> {
                 binding.root.setBackgroundResource(R.drawable.sunny_background)
                 binding.animation.setAnimation(R.raw.sunny)
             }
-            "Partly Clouds","Clouds","Overcast","Mist"->{
+
+            "Partly Clouds", "Clouds", "Overcast", "Mist" -> {
                 binding.root.setBackgroundResource(R.drawable.colud_background)
                 binding.animation.setAnimation(R.raw.cloud)
             }
-            "Light rain","Drizzle","Moderate Rain","Showers","Heavy Rain"->{
+
+            "Light rain", "Drizzle", "Moderate Rain", "Showers", "Heavy Rain" -> {
                 binding.root.setBackgroundResource(R.drawable.rain_background)
                 binding.animation.setAnimation(R.raw.rain)
             }
-            "Light Snow","Moderate Snow","Heavy Snow","Blizzard"->{
+
+            "Light Snow", "Moderate Snow", "Heavy Snow", "Blizzard" -> {
                 binding.root.setBackgroundResource(R.drawable.snow_background)
                 binding.animation.setAnimation(R.raw.snow)
             }
-            else->{
+
+            else -> {
                 binding.root.setBackgroundResource(R.drawable.sunny_background)
                 binding.animation.setAnimation(R.raw.sunny)
             }
