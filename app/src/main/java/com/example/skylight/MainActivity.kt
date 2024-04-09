@@ -30,6 +30,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.LocationManager
 import androidx.activity.result.contract.ActivityResultContracts
+
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
@@ -42,6 +43,11 @@ import java.lang.Exception
 
 //3a92cecdb8ba1596c279d469f5ec4045
 class MainActivity : AppCompatActivity() {
+    //location Latitude,longitude
+    private var cityLati=0.0
+    private var cityLongi=0.0
+    private var searchCity=""
+
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -55,6 +61,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+
+
 
         val locationPermissionRequest = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
@@ -79,15 +88,15 @@ class MainActivity : AppCompatActivity() {
                             )
                             result.addOnCompleteListener { task ->
                                 if (task.isSuccessful && task.result != null) {
-                                    val location =
-                                        "Latitude: " + task.result.latitude + "\n" + "Longitude: " + task.result.longitude
-                                    Toast.makeText(this, location, Toast.LENGTH_SHORT).show()
+                                    val location ="Latitude: " + task.result.latitude + "\n" + "Longitude: " + task.result.longitude
+                                    //update longi and latitude
+                                    cityLati=task.result.latitude
+                                    cityLongi=task.result.longitude
+                                    fetchCityName()
+
+//                                    Toast.makeText(this, location, Toast.LENGTH_SHORT).show()
                                 } else {
-                                    Toast.makeText(
-                                        this,
-                                        "Unable to get current location",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(this, "Unable to get current location", Toast.LENGTH_SHORT).show()
                                 }
                             }
                         } catch (e: SecurityException) {
@@ -119,11 +128,23 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        val city = "allahabad"
-        fetchWeatherData(city)
+/*        //check api url
+        val baseUrl = "https://api.openweathermap.org/data/2.5/"
+        val apiKey = "3a92cecdb8ba1596c279d469f5ec4045"
+        val apiUrl = "${baseUrl}weather?lat=$cityLati&lon=$cityLongi&appid=$apiKey"
+        //Log.d("TAG", "fetchWeatherData: $apiUrl")*/
+
+
+//        val city = "allahabad"
+//        val city=searchCity
+
+//        fetchWeatherData(searchCity)
+
         searchCity()
 
     }
+
+
 
     private fun isLocationEnabled(): Boolean {
 
@@ -185,7 +206,33 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun fetchCityName() {
+        val retrofit = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("https://api.openweathermap.org/data/2.5/")
+            .build().create(ApiInterface::class.java)
+        val response = retrofit.getcityName(cityLati,cityLongi ,"3a92cecdb8ba1596c279d469f5ec4045")
+        Log.d("TAG", "fetchCityName: $response")
 
+        response.enqueue(object:Callback<fetchCityName>{
+            override fun onResponse(call: Call<fetchCityName>, response: Response<fetchCityName>) {
+                val responseBody=response.body()
+                if(response.isSuccessful && responseBody!=null){
+                    searchCity=responseBody.name
+                    Log.d("TAG", "onResponse: $searchCity")
+                    fetchWeatherData(searchCity)
+
+                }else{
+                    Toast.makeText(applicationContext, "Not working", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<fetchCityName>, t: Throwable) {
+
+            }
+
+        })
+    }
     private fun fetchWeatherData(cityName: String) {
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
@@ -194,14 +241,13 @@ class MainActivity : AppCompatActivity() {
         val response =
             retrofit.getWeatherData(cityName, "3a92cecdb8ba1596c279d469f5ec4045", "metric")
 
-        //check api url
+/*        //check api url
         val baseUrl = "https://api.openweathermap.org/data/2.5/"
         val city = "jaipur"
         val apiKey = "3a92cecdb8ba1596c279d469f5ec4045"
         val units = "metric"
         val apiUrl = "${baseUrl}weather?q=$city&appid=$apiKey&units=$units"
-        //Log.d("TAG", "fetchWeatherData: $apiUrl")
-
+        //Log.d("TAG", "fetchWeatherData: $apiUrl")*/
 
         response.enqueue(object : Callback<weatherApp> {
             @RequiresApi(Build.VERSION_CODES.O)
@@ -276,6 +322,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+
 
     private fun changeImageAcctoWeather(condition: String) {
 
