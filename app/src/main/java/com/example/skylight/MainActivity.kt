@@ -28,7 +28,9 @@ import java.util.Locale
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.location.LocationManager
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 
 import com.google.android.gms.common.api.ResolvableApiException
@@ -354,5 +356,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.animation.playAnimation()
+    }
+
+    fun navigateToPollution(view : View){
+        startActivity(Intent(this,pollutionActivity::class.java))
     }
 }

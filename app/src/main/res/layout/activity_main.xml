@@ -134,6 +134,7 @@
         app:layout_constraintTop_toBottomOf="@+id/day" />
 
     <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/gridLayout"
         android:layout_width="match_parent"
         android:layout_height="270dp"
         android:layout_margin="20dp"
@@ -371,6 +372,21 @@
         </LinearLayout>
 
     </androidx.gridlayout.widget.GridLayout>
+
+    <ImageView
+        android:id="@+id/pollution"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="32dp"
+        android:onClick="navigateToPollution"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/date"
+        app:layout_constraintTop_toBottomOf="@+id/max_temp"
+        app:srcCompat="@drawable/air_pollution" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
