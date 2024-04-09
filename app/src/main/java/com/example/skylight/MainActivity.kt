@@ -70,40 +70,54 @@ class MainActivity : AppCompatActivity() {
                 -> {
                     Toast.makeText(this, "Location Access Granted", Toast.LENGTH_SHORT).show()
 
-                    if (isLocationEnabled()){
+                    if (isLocationEnabled()) {
 
-                        val result = fusedLocationClient.getCurrentLocation(
-                            Priority.PRIORITY_BALANCED_POWER_ACCURACY,
-                            CancellationTokenSource().token
-                        )
-                        result.addOnCompleteListener {
-                            val location =
-                                "Latitude: " + it.result.latitude + "\n" + "Longitude: " + it.result.longitude
-
-                            Toast.makeText(this, f"{location}", Toast.LENGTH_SHORT)
+                        try {
+                            val result = fusedLocationClient.getCurrentLocation(
+                                Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+                                CancellationTokenSource().token
+                            )
+                            result.addOnCompleteListener { task ->
+                                if (task.isSuccessful && task.result != null) {
+                                    val location =
+                                        "Latitude: " + task.result.latitude + "\n" + "Longitude: " + task.result.longitude
+                                    Toast.makeText(this, location, Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(
+                                        this,
+                                        "Unable to get current location",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        } catch (e: SecurityException) {
+                            // Handle the SecurityException here, for example, by requesting permission again
+                            Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT)
+                                .show()
+                            // Optionally, request permission again or handle the denial gracefully
                         }
                     } else {
 
-                        Toast.makeText(this, "Please turn ON the location.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Please turn ON the location.", Toast.LENGTH_SHORT)
+                            .show()
                         createLocationRequest()
-                            }
+                    }
 
-                } else -> {
+                }
+
+                else -> {
 
                     Toast.makeText(this, "No Location Access", Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
-        binding.search.setOnClickListener {
-
-            locationPermissionRequest.launch(
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
+        locationPermissionRequest.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
             )
-        }
+        )
 
         val city = "allahabad"
         fetchWeatherData(city)
@@ -117,8 +131,9 @@ class MainActivity : AppCompatActivity() {
 
         try {
 
-            return locationManager.isLocationEnabled(LocationManager.GPS_PROVIDER)
-        }catch (e: Exception) {
+//            return locationManager.isLocationEnabled(LocationManager.GPS_PROVIDER)
+            return locationManager.isLocationEnabled
+        } catch (e: Exception) {
 
             e.printStackTrace()
         }
@@ -127,11 +142,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createLocationRequest() {
-
-        val locationRequest = LocationManager.Builder(
-            Priority.PRIORITY_HIGH_ACCURACY,
-            10000
-        ).setMinUpdateIntervalMillis(5000).build()
+        val locationRequest = LocationRequest.create().apply {
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            interval = 10000
+        }
 
         val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
 
@@ -139,20 +153,15 @@ class MainActivity : AppCompatActivity() {
         val task = client.checkLocationSettings(builder.build())
 
         task.addOnSuccessListener {
-
+            // Location settings are satisfied, continue flow
         }
 
         task.addOnFailureListener { e ->
             if (e is ResolvableApiException) {
-
                 try {
-
-                    e.startResolutionForResult(
-                        this, 100
-                    )
-                } catch (sendEx: java.lang.Exception) {
-
-
+                    e.startResolutionForResult(this, 100)
+                } catch (sendEx: Exception) {
+                    // Ignore the error
                 }
             }
         }
