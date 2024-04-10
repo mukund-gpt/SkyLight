@@ -34,6 +34,7 @@ interface ApiInterface {
         @Query("lat") lat:Double,
         @Query("lon") lon:Double,
         @Query("appid") appid:String,
+        @Query("units") units:String
     ):Call<forecast>
 
 
