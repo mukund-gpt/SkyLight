@@ -5,8 +5,8 @@ data class airPollution(
     val list: ArrayList<Items>
 ) {
     data class Coord(
-        val lat: Int,
-        val lon: Int
+        val lat: Double,
+        val lon: Double
     )
 
     data class Items (

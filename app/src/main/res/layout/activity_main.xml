@@ -102,7 +102,7 @@
         android:id="@+id/weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="50dp"
         android:fontFamily="@font/roboto_bold"
         android:text="SUNNY"
         android:textSize="20sp"
