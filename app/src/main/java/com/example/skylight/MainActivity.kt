@@ -1,23 +1,31 @@
 package com.example.skylight
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.skylight.databinding.ActivityMainBinding
-
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -26,22 +34,6 @@ import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.location.LocationManager
-import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
-
-import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.gms.location.Priority
-import com.google.android.gms.tasks.CancellationTokenSource
-import java.lang.Exception
-
 
 //3a92cecdb8ba1596c279d469f5ec4045
 class MainActivity : AppCompatActivity() {
@@ -49,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     private var cityLati=0.0
     private var cityLongi=0.0
     private var searchCity=""
+    private var lat=0.0
+    private var lon=0.0
 
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -293,11 +287,19 @@ class MainActivity : AppCompatActivity() {
                     // Format the date and day
                     val date = currentTime.format(dateFormatter)
                     val day = currentTime.dayOfWeek.getDisplayName(dayOfWeekFormatter, locale)
+                    val description=responseBody.weather.firstOrNull()?.description
+
+                    //pass data to pollution activity
+                    lat=responseBody.coord.lat
+                    lon=responseBody.coord.lon
+//                    Log.d("TAG", "onResponse: $lat")
+//                    Log.d("TAG", "onResponse: $lon")
+
 
 
                     binding.city.text = "$cityName"
                     binding.temp.text = "$temperature°ᶜ"
-                    binding.weather.text = weather
+                    binding.weather.text = description
                     binding.minTemp.text = "Min temp: $minTemp°ᶜ"
                     binding.maxTemp.text = "Max temp: $maxTemp°ᶜ"
                     binding.day.text = "$day"
@@ -329,22 +331,22 @@ class MainActivity : AppCompatActivity() {
     private fun changeImageAcctoWeather(condition: String) {
 
         when (condition) {
-            "Clear Sky", "Sunny", "Clear" -> {
+            "Smoke","Clear Sky", "Sunny", "Clear" -> {
                 binding.root.setBackgroundResource(R.drawable.sunny_background)
                 binding.animation.setAnimation(R.raw.sunny)
             }
 
-            "Partly Clouds", "Clouds", "Overcast", "Mist" -> {
+            "Haze","Partly Clouds", "Clouds", "Overcast", "Mist" -> {
                 binding.root.setBackgroundResource(R.drawable.colud_background)
                 binding.animation.setAnimation(R.raw.cloud)
             }
 
-            "Light rain", "Drizzle", "Moderate Rain", "Showers", "Heavy Rain" -> {
+            "Rain","Light rain", "Drizzle", "Moderate Rain", "Showers", "Heavy Rain" -> {
                 binding.root.setBackgroundResource(R.drawable.rain_background)
                 binding.animation.setAnimation(R.raw.rain)
             }
 
-            "Light Snow", "Moderate Snow", "Heavy Snow", "Blizzard" -> {
+            "Snow","Light Snow", "Moderate Snow", "Heavy Snow", "Blizzard" -> {
                 binding.root.setBackgroundResource(R.drawable.snow_background)
                 binding.animation.setAnimation(R.raw.snow)
             }
@@ -358,7 +360,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun navigateToPollution(view : View){
-        startActivity(Intent(this,pollutionActivity::class.java))
+/*        this.startActivity(Intent(this,pollutionActivity::class.java)
+            .putExtra("lati",lat)
+            .putExtra("longi",lon))*/
+        val intent=Intent(this,pollutionActivity::class.java)
+        intent.putExtra("lat",lat)
+        intent.putExtra("lon",lon)
+        startActivity(intent)
 
     }
 }

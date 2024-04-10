@@ -24,7 +24,13 @@ class pollutionActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        
+        lati = intent.getDoubleExtra("lat", 0.0).toDouble()
+        longi = intent.getDoubleExtra("lon", 0.0).toDouble()
+
+
+        Log.d("TAG", "onCreate: $lati")
+        Log.d("TAG", "onCreate: $longi")
+
         fetchPollutionData()
 
     }
@@ -72,7 +78,8 @@ class pollutionActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<airPollution>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.e("TAG", "Failed to fetch pollution data: ${t.message}")
+                Toast.makeText(applicationContext, "Failed to fetch pollution data", Toast.LENGTH_SHORT).show()
             }
 
         })
