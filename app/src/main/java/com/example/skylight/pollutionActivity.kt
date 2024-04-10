@@ -44,7 +44,26 @@ class pollutionActivity : AppCompatActivity() {
 
                 if(response.isSuccessful && responseBody!=null){
                     val aqi= responseBody.list.firstOrNull()?.main?.aqi
-                    Log.d("TAG", "onResponse: $aqi")
+                    val co=responseBody.list.firstOrNull()?.components?.co
+                    val no=responseBody.list.firstOrNull()?.components?.no
+                    val no2=responseBody.list.firstOrNull()?.components?.no2
+                    val o3=responseBody.list.firstOrNull()?.components?.o3
+                    val so2=responseBody.list.firstOrNull()?.components?.so2
+                    val pm2_5=responseBody.list.firstOrNull()?.components?.pm2_5
+                    val pm10=responseBody.list.firstOrNull()?.components?.pm10
+                    val nh3=responseBody.list.firstOrNull()?.components?.nh3
+
+
+                    binding.aqi.text="$aqi"
+                    binding.co.text="$co"+"µg/m3"
+                    binding.no.text="$no"+"µg/m3"
+                    binding.no2.text="$no2"+"µg/m3"
+                    binding.o3.text="$o3"+"µg/m3"
+                    binding.so2.text="$so2"+"µg/m3"
+                    binding.pm25.text="$pm2_5"+"µg/m3"
+                    binding.pm10.text="$pm10"+"µg/m3"
+                    binding.nh3.text="$nh3"+"µg/m3"
+
 
                 }else{
                     Log.d("TAG", "onResponse: From else")
