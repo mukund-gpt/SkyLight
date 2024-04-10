@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:circularflow_radiusInDP="date6"
     tools:context=".forecastActivity">
 
     <LinearLayout
@@ -29,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
-        android:background="#6600F40A"
+        android:background="@drawable/clouds"
         app:columnCount="1"
         app:layout_constraintTop_toTopOf="@id/heading_layout"
         app:rowCount="4">
@@ -45,7 +44,7 @@
             app:layout_rowWeight="1">
 
             <LinearLayout
-                android:layout_width="80dp"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
@@ -61,6 +60,7 @@
                     android:gravity="center"
                     android:text="DateTime"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -73,12 +73,13 @@
                     android:gravity="center"
                     android:text="Description"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/icon1"
-                android:layout_width="80dp"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
@@ -86,15 +87,16 @@
 
             <TextView
                 android:id="@+id/temp1"
-                android:layout_width="wrap_content"
+                android:layout_width="65dp"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:maxWidth="50dp"
                 android:text="Temp"
                 android:textAlignment="center"
-                android:textSize="25sp"
+                android:textColor="@color/text_color"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -113,6 +115,7 @@
                     android:gravity="center"
                     android:text="Humidity"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -125,6 +128,7 @@
                     android:gravity="center"
                     android:text="WindSpeed"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -140,7 +144,7 @@
             app:layout_rowWeight="1">
 
             <LinearLayout
-                android:layout_width="80dp"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
@@ -156,6 +160,7 @@
                     android:gravity="center"
                     android:text="DateTime"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -168,11 +173,12 @@
                     android:gravity="center"
                     android:text="Description"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <ImageView
-                android:layout_width="80dp"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
@@ -180,15 +186,16 @@
 
             <TextView
                 android:id="@+id/temp2"
-                android:layout_width="wrap_content"
+                android:layout_width="65dp"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:maxWidth="50dp"
                 android:text="Temp"
                 android:textAlignment="center"
-                android:textSize="25sp"
+                android:textColor="@color/text_color"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -207,6 +214,7 @@
                     android:gravity="center"
                     android:text="Humidity"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -219,6 +227,7 @@
                     android:gravity="center"
                     android:text="WindSpeed"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -234,7 +243,7 @@
             app:layout_rowWeight="1">
 
             <LinearLayout
-                android:layout_width="80dp"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
@@ -250,6 +259,7 @@
                     android:gravity="center"
                     android:text="DateTime"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -262,11 +272,12 @@
                     android:gravity="center"
                     android:text="Description"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <ImageView
-                android:layout_width="80dp"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
@@ -274,15 +285,16 @@
 
             <TextView
                 android:id="@+id/temp3"
-                android:layout_width="wrap_content"
+                android:layout_width="65dp"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:maxWidth="50dp"
                 android:text="Temp"
                 android:textAlignment="center"
-                android:textSize="25sp"
+                android:textColor="@color/text_color"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -301,6 +313,7 @@
                     android:gravity="center"
                     android:text="Humidity"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -313,6 +326,7 @@
                     android:gravity="center"
                     android:text="WindSpeed"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -328,7 +342,7 @@
             app:layout_rowWeight="1">
 
             <LinearLayout
-                android:layout_width="80dp"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
@@ -344,6 +358,7 @@
                     android:gravity="center"
                     android:text="DateTime"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -356,11 +371,12 @@
                     android:gravity="center"
                     android:text="Description"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <ImageView
-                android:layout_width="80dp"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
@@ -368,15 +384,16 @@
 
             <TextView
                 android:id="@+id/temp4"
-                android:layout_width="wrap_content"
+                android:layout_width="65dp"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:maxWidth="50dp"
                 android:text="Temp"
                 android:textAlignment="center"
-                android:textSize="25sp"
+                android:textColor="@color/text_color"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -395,6 +412,7 @@
                     android:gravity="center"
                     android:text="Humidity"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -407,6 +425,7 @@
                     android:gravity="center"
                     android:text="WindSpeed"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -422,7 +441,7 @@
             app:layout_rowWeight="1">
 
             <LinearLayout
-                android:layout_width="80dp"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
@@ -438,6 +457,7 @@
                     android:gravity="center"
                     android:text="DateTime"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -450,11 +470,12 @@
                     android:gravity="center"
                     android:text="Description"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <ImageView
-                android:layout_width="80dp"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
@@ -462,15 +483,16 @@
 
             <TextView
                 android:id="@+id/temp5"
-                android:layout_width="wrap_content"
+                android:layout_width="65dp"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:maxWidth="50dp"
                 android:text="Temp"
                 android:textAlignment="center"
-                android:textSize="25sp"
+                android:textColor="@color/text_color"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -489,6 +511,7 @@
                     android:gravity="center"
                     android:text="Humidity"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -501,6 +524,7 @@
                     android:gravity="center"
                     android:text="WindSpeed"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -516,7 +540,7 @@
             app:layout_rowWeight="1">
 
             <LinearLayout
-                android:layout_width="80dp"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
@@ -532,6 +556,7 @@
                     android:gravity="center"
                     android:text="DateTime"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -544,11 +569,12 @@
                     android:gravity="center"
                     android:text="Description"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <ImageView
-                android:layout_width="80dp"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
@@ -556,15 +582,16 @@
 
             <TextView
                 android:id="@+id/temp6"
-                android:layout_width="wrap_content"
+                android:layout_width="65dp"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:maxWidth="50dp"
                 android:text="Temp"
                 android:textAlignment="center"
-                android:textSize="25sp"
+                android:textColor="@color/text_color"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -583,6 +610,7 @@
                     android:gravity="center"
                     android:text="Humidity"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -595,6 +623,7 @@
                     android:gravity="center"
                     android:text="WindSpeed"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -610,7 +639,7 @@
             app:layout_rowWeight="1">
 
             <LinearLayout
-                android:layout_width="80dp"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
@@ -626,6 +655,7 @@
                     android:gravity="center"
                     android:text="DateTime"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -638,11 +668,12 @@
                     android:gravity="center"
                     android:text="Description"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <ImageView
-                android:layout_width="80dp"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
@@ -650,15 +681,16 @@
 
             <TextView
                 android:id="@+id/temp7"
-                android:layout_width="wrap_content"
+                android:layout_width="65dp"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:maxWidth="50dp"
                 android:text="Temp"
                 android:textAlignment="center"
-                android:textSize="25sp"
+                android:textColor="@color/text_color"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -677,6 +709,7 @@
                     android:gravity="center"
                     android:text="Humidity"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -689,6 +722,7 @@
                     android:gravity="center"
                     android:text="WindSpeed"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -704,7 +738,7 @@
             app:layout_rowWeight="1">
 
             <LinearLayout
-                android:layout_width="80dp"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
@@ -720,6 +754,7 @@
                     android:gravity="center"
                     android:text="DateTime"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -732,11 +767,12 @@
                     android:gravity="center"
                     android:text="Description"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <ImageView
-                android:layout_width="80dp"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
@@ -744,15 +780,16 @@
 
             <TextView
                 android:id="@+id/temp8"
-                android:layout_width="wrap_content"
+                android:layout_width="65dp"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:maxWidth="50dp"
                 android:text="Temp"
                 android:textAlignment="center"
-                android:textSize="25sp"
+                android:textColor="@color/text_color"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -771,6 +808,7 @@
                     android:gravity="center"
                     android:text="Humidity"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -783,6 +821,7 @@
                     android:gravity="center"
                     android:text="WindSpeed"
                     android:textAlignment="center"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold" />
             </LinearLayout>
 
