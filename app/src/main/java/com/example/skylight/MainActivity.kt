@@ -360,10 +360,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun navigateToPollution(view : View){
-/*        this.startActivity(Intent(this,pollutionActivity::class.java)
-            .putExtra("lati",lat)
-            .putExtra("longi",lon))*/
         val intent=Intent(this,pollutionActivity::class.java)
+        intent.putExtra("lat",lat)
+        intent.putExtra("lon",lon)
+        startActivity(intent)
+
+    }
+
+    fun navigateToForecast(view : View){
+        val intent=Intent(this,forecastActivity::class.java)
         intent.putExtra("lat",lat)
         intent.putExtra("lon",lon)
         startActivity(intent)

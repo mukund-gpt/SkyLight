@@ -1,5 +1,6 @@
 package com.example.skylight
 
+import com.example.skylight.forecast.forecast
 import com.example.skylight.pollution.airPollution
 import retrofit2.Call
 import retrofit2.http.GET
@@ -27,6 +28,13 @@ interface ApiInterface {
         @Query("lon") lon:Double,
         @Query("appid") appid:String,
     ):Call<airPollution>
+
+    @GET("forecast")
+    fun getForecastData (
+        @Query("lat") lat:Double,
+        @Query("lon") lon:Double,
+        @Query("appid") appid:String,
+    ):Call<forecast>
 
 
 }
