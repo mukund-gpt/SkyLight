@@ -214,14 +214,14 @@ class MainActivity : AppCompatActivity() {
             .baseUrl("https://api.openweathermap.org/data/2.5/")
             .build().create(ApiInterface::class.java)
         val response = retrofit.getcityName(cityLati,cityLongi ,"3a92cecdb8ba1596c279d469f5ec4045")
-        Log.d("TAG", "fetchCityName: $response")
+        //Log.d("TAG", "fetchCityName: $response")
 
         response.enqueue(object:Callback<fetchCityName>{
             override fun onResponse(call: Call<fetchCityName>, response: Response<fetchCityName>) {
                 val responseBody=response.body()
                 if(response.isSuccessful && responseBody!=null){
                     searchCity=responseBody.name
-                    Log.d("TAG", "onResponse: $searchCity")
+                    //Log.d("TAG", "onResponse: $searchCity")
                     fetchWeatherData(searchCity)
 
                 }else{
@@ -240,8 +240,7 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("https://api.openweathermap.org/data/2.5/")
             .build().create(ApiInterface::class.java)
-        val response =
-            retrofit.getWeatherData(cityName, "3a92cecdb8ba1596c279d469f5ec4045", "metric")
+        val response = retrofit.getWeatherData(cityName, "3a92cecdb8ba1596c279d469f5ec4045", "metric")
 
 /*        //check api url
         val baseUrl = "https://api.openweathermap.org/data/2.5/"
@@ -360,5 +359,6 @@ class MainActivity : AppCompatActivity() {
 
     fun navigateToPollution(view : View){
         startActivity(Intent(this,pollutionActivity::class.java))
+
     }
 }
