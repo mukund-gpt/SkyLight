@@ -82,7 +82,8 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/weather_icon_foreground" />
 
             <TextView
@@ -178,10 +179,11 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/icon2"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/weather_icon_foreground" />
 
             <TextView
@@ -277,10 +279,11 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/icon3"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/weather_icon_foreground" />
 
             <TextView
@@ -376,10 +379,11 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/icon4"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/weather_icon_foreground" />
 
             <TextView
@@ -475,10 +479,11 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/icon5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/weather_icon_foreground" />
 
             <TextView
@@ -574,10 +579,11 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/icon6"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/weather_icon_foreground" />
 
             <TextView
@@ -673,10 +679,11 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/icon7"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/weather_icon_foreground" />
 
             <TextView
@@ -772,10 +779,11 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/icon8"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/weather_icon_foreground" />
 
             <TextView

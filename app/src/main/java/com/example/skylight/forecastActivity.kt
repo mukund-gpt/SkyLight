@@ -2,12 +2,14 @@ package com.example.skylight
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.example.skylight.databinding.ActivityForecastBinding
 import com.example.skylight.databinding.ActivityPollutionBinding
 import com.example.skylight.forecast.forecast
@@ -61,6 +63,7 @@ class forecastActivity : AppCompatActivity() {
                         val temp=responseBody.list[i].main.temp
                         val humidity=responseBody.list[i].main.humidity
                         val windSpeed=responseBody.list[i].wind.speed
+                        val icon=responseBody.list[i].weather.firstOrNull()?.icon
 
                         val dateViewId = resources.getIdentifier("date$i", "id", packageName)
                         findViewById<TextView>(dateViewId).text=date
@@ -76,6 +79,14 @@ class forecastActivity : AppCompatActivity() {
 
                         val windspeedid = resources.getIdentifier("windspeed$i", "id", packageName)
                         findViewById<TextView>(windspeedid).text="Wind Speed: "+windSpeed.toString()+"m/s"
+
+
+                        val iconId = resources.getIdentifier("icon$i", "id", packageName)
+                        val imageView = findViewById<ImageView>(iconId)
+                        Glide.with(this@forecastActivity)
+                            .load("https://openweathermap.org/img/wn/$icon@2x.png")
+                            .into(imageView)
+
                     }
 
                 }else{
